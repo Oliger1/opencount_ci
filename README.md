@@ -13,12 +13,12 @@ OpenCount CI is a Python library for counting objects in images without requirin
 
 ## Key Features
 
-✅ **No training data required** - works out of the box  
-✅ **No semantic labels** - purely visual pattern analysis  
-✅ **Statistical confidence** - bootstrap-based uncertainty estimates  
-✅ **Anonymous grouping** - cluster similar objects (G0, G1, G2...)  
-✅ **Visual patterns** - classify by geometry and appearance only  
-✅ **Fast & efficient** - optimized detectors with parallel processing  
+ **No training data required** - works out of the box  
+ **No semantic labels** - purely visual pattern analysis  
+ **Statistical confidence** - bootstrap-based uncertainty estimates  
+ **Anonymous grouping** - cluster similar objects (G0, G1, G2...)  
+ **Visual patterns** - classify by geometry and appearance only  
+ **Fast & efficient** - optimized detectors with parallel processing  
 
 ## Installation
 
