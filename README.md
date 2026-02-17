@@ -1,4 +1,4 @@
-# OpenCount CI Enhanced
+# OpenCount 
 
 **Class-agnostic object counting with confidence intervals, anonymous grouping, and visual pattern classification.**
 
@@ -361,7 +361,7 @@ If you use OpenCount CI in your research:
   title={OpenCount CI: Class-Agnostic Object Counting with Confidence Intervals},
   author={OpenCount CI Contributors},
   year={2024},
-  url={https://github.com/yourusername/opencount-ci}
+  url={https://github.com/Oliger1/opencount-ci}
 }
 ```
 
