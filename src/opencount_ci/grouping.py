@@ -152,16 +152,22 @@ def _binary_mask_adaptive(gray: np.ndarray) -> np.ndarray:
 
 def features_for_box(img_bgr: np.ndarray, box: BBox, full_shape: Tuple[int, int]) -> np.ndarray:
     """
-    Extract comprehensive feature vector for a bounding box.
+    Extract a 47-dimensional feature vector for a bounding box.
 
-    Features (total ~40 dimensions):
-    - Color histogram (24): 8 bins × 3 channels (HSV)
-    - Dominant color (3): H, S, V medians
-    - Color statistics (6): mean/std for H, S, V
-    - Shape features (7): circularity, solidity, extent, aspect, eccentricity, compactness, log(area)
-    - Texture features (4): edge density, gradient mean/std, LBP variance
-    - Spatial features (2): relative position, relative size
+    Feature groups:
+    - Color histogram (24 dims): 8 bins per HSV channel.
+    - Dominant color (3 dims): median H, S, V.
+    - Color statistics (6 dims): mean and std for H, S, V.
+    - Shape features (7 dims): circularity, solidity, extent,
+      aspect ratio, eccentricity, compactness, log(area).
+    - Texture features (4 dims): edge density, gradient mean/std,
+      Laplacian variance.
+    - Spatial features (3 dims): relative center_x, center_y,
+      relative area of box.
+
+    Total: 47 features.
     """
+
     crop = _safe_crop(img_bgr, box)
     if crop.ndim == 2:
         crop = cv2.cvtColor(crop, cv2.COLOR_GRAY2BGR)
@@ -177,6 +183,7 @@ def features_for_box(img_bgr: np.ndarray, box: BBox, full_shape: Tuple[int, int]
 
     # Color features
     color_hist = _extract_color_histogram(crop, bins=8)
+
     dom_h, dom_s, dom_v = _dominant_color(crop)
 
     hsv = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
@@ -191,17 +198,17 @@ def features_for_box(img_bgr: np.ndarray, box: BBox, full_shape: Tuple[int, int]
     # Texture features
     texture_feats = _texture_features(gray)
 
-    # Combine all features
     features = np.concatenate([
-        color_hist,  # 24
-        [dom_h, dom_s, dom_v],  # 3
-        [h_mean, s_mean, v_mean, h_std, s_std, v_std],  # 6
-        shape_feats,  # 7
-        texture_feats,  # 4
-        [center_x, center_y, rel_area]  # 3
+        color_hist,
+        [dom_h, dom_s, dom_v],
+        [h_mean, s_mean, v_mean, h_std, s_std, v_std],
+        shape_feats,
+        texture_feats,
+        [center_x, center_y, rel_area]
     ]).astype(np.float32)
 
     return features
+
 
 
 def build_feature_matrix(img_bgr: np.ndarray, boxes: List[BBox]) -> np.ndarray:
