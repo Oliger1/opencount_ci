@@ -30,7 +30,7 @@ pip install -e .
 Or install directly:
 
 ```bash
-pip install opencount-ci-enhanced
+pip install opencount-ci
 ```
 
 ## Quick Start
